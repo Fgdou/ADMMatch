@@ -15,7 +15,4 @@ object ADNMatchV1 extends App {
   val seq1 = List(UneBase(A), Choix(UneBase(T), UneBase(A)))
   val seq2 = List(Repete(UneBase(T)), Repete(Nqb), UneBase(G))
   val seq3 = List(Repete(UneBase(T)), NFois(Nqb, 3), UneBase(G))
-
-  println(listeBasesToString(List(A,C,T,G,A,T,G,C)))
-
 }
