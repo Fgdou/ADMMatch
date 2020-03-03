@@ -11,7 +11,6 @@ import fr.istic.si2.adnmatchlib._
 object ADNMatchV1 extends App {
 
   println("ADNMatch Version 1")
-  // TODO V1 - fgdou
 
   //T*(.*)G
   val seq2 = List(Repete(UneBase(T)), Repete(Nqb), UneBase(G))
