@@ -78,9 +78,41 @@ object FonctionsRExp {
   /**
    * @param e une expression régulière
    * @return une liste de bases obtenue en déroulant e tout le temps de la même manière.
-   * @note Indiquez ici vos choix réalisés pour les répétitions, les choix, les Nqb.
+   * @note Nqb        : A
+   *       Repetition : 1 fois
    */
-  // TODO V1
-  def deroule(e: RExp): Option[List[Base]] = ???
+  def deroule(e: RExp): Option[List[Base]] = {
+    e match {
+      case Impossible     => None
+      case Nqb            => Some(List(A))
+      case Vide           => Some(Nil)
+      case UneBase(a)     => Some(List(a))
+      case Concat(e1, e2) =>
+        (deroule(e1), deroule(e2)) match {
+          case (Some(e1), Some(e2)) => Some(e1 ++ e2)
+          case _                    => None
+        }
+      case Choix(e, _)    =>
+        deroule(e) match {
+          case Some(e) => Some(e)
+          case _       => None
+        }
+      case Repete(e)      =>
+        deroule(e) match {
+          case Some(e) => Some(e)
+          case _       => None
+        }
+      case NFois(e, 0)    =>
+        deroule(e) match {
+          case Some(e) => Some(Nil)
+          case _       => None
+        }
+      case NFois(e, n)    =>
+        (deroule(NFois(e, n - 1)), deroule(e)) match {
+          case (Some(e1), Some(e2)) => Some(e1 ++ e2)
+          case (_, _)               => None
+        }
+    }
+  }
 
 }
