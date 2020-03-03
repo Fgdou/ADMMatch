@@ -47,8 +47,21 @@ object FonctionsRExp {
    * @param e une expression régulière
    * @return la représentation textuelle de e, avec toutes les parenthèses nécessaires
    */
-  // TODO V1
-  def rExpToString(e: RExp): String = ???
+  def rExpToString(e: RExp): String = {
+    e match{
+      case UneBase(A) => "A"
+      case UneBase(T) => "T"
+      case UneBase(G) => "G"
+      case UneBase(C) => "C"
+      case Vide => "%"
+      case Nqb => "."
+      case Impossible => "@"
+      case NFois(e, n) => "(" + rExpToString(e) + "){" + n + "}"
+      case Concat(e1, e2) => rExpToString(e1) + rExpToString(e2)
+      case Choix(e1, e2) => "(" + rExpToString(e1) + "|" + rExpToString(e2) + ")"
+      case Repete(e) => "(" + rExpToString(e) + ")*"
+    }
+  }
 
   /**
    * @param e une expression régulière
