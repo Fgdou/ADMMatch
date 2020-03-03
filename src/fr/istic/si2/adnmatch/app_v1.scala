@@ -12,4 +12,7 @@ object ADNMatchV1 extends App {
 
   println("ADNMatch Version 1")
   // TODO V1 - fgdou
+
+  //T*(.*)G
+  val seq2 = Concat(Repete(UneBase(T)), Concat(Repete(Nqb), UneBase(G)))
 }
