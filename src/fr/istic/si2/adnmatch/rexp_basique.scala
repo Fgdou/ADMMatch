@@ -8,9 +8,13 @@ import fr.istic.si2.adnmatch._
  * les bases azotées composant les séquences ADN.
  */
 sealed trait Base
+
 case object A extends Base
+
 case object T extends Base
+
 case object G extends Base
+
 case object C extends Base
 
 /**
@@ -18,13 +22,21 @@ case object C extends Base
  * expressions régulières sur les bases azotées.
  */
 sealed trait RExp
+
 case object Impossible extends RExp
+
 case object Vide extends RExp
+
 case object Nqb extends RExp
+
 case class UneBase(b: Base) extends RExp
+
 case class Choix(e1: RExp, e2: RExp) extends RExp
+
 case class Concat(e1: RExp, e2: RExp) extends RExp
+
 case class Repete(e: RExp) extends RExp
+
 case class NFois(e: RExp, n: Int) extends RExp
 
 object FonctionsRExp {
@@ -35,7 +47,7 @@ object FonctionsRExp {
    */
   def listeBasesToString(lb: List[Base]): String = {
     lb match {
-      case Nil => ""
+      case Nil    => ""
       case A :: l => "A" + listeBasesToString(l)
       case T :: l => "T" + listeBasesToString(l)
       case G :: l => "G" + listeBasesToString(l)
@@ -48,18 +60,18 @@ object FonctionsRExp {
    * @return la représentation textuelle de e, avec toutes les parenthèses nécessaires
    */
   def rExpToString(e: RExp): String = {
-    e match{
-      case UneBase(A) => "A"
-      case UneBase(T) => "T"
-      case UneBase(G) => "G"
-      case UneBase(C) => "C"
-      case Vide => "%"
-      case Nqb => "."
-      case Impossible => "@"
-      case NFois(e, n) => "(" + rExpToString(e) + "){" + n + "}"
+    e match {
+      case UneBase(A)     => "A"
+      case UneBase(T)     => "T"
+      case UneBase(G)     => "G"
+      case UneBase(C)     => "C"
+      case Vide           => "%"
+      case Nqb            => "."
+      case Impossible     => "@"
+      case NFois(e, n)    => "(" + rExpToString(e) + "){" + n + "}"
       case Concat(e1, e2) => rExpToString(e1) + rExpToString(e2)
-      case Choix(e1, e2) => "(" + rExpToString(e1) + "|" + rExpToString(e2) + ")"
-      case Repete(e) => "(" + rExpToString(e) + ")*"
+      case Choix(e1, e2)  => "(" + rExpToString(e1) + "|" + rExpToString(e2) + ")"
+      case Repete(e)      => "(" + rExpToString(e) + ")*"
     }
   }
 
