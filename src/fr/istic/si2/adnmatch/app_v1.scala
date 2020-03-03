@@ -11,5 +11,5 @@ import fr.istic.si2.adnmatchlib._
 object ADNMatchV1 extends App {
 
   println("ADNMatch Version 1")
-  // TODO V1 - A compléter
+  // TODO V1 - A
 }
