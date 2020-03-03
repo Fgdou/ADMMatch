@@ -14,5 +14,5 @@ object ADNMatchV1 extends App {
   // TODO V1 - fgdou
 
   //T*(.*)G
-  val seq2 = Concat(Repete(UneBase(T)), Concat(Repete(Nqb), UneBase(G)))
+  val seq2 = List(Repete(UneBase(T)), Repete(Nqb), UneBase(G))
 }
