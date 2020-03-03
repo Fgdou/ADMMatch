@@ -10,14 +10,7 @@ import fr.istic.si2.adnmatchlib._
  */
 object ADNMatchV1 extends App {
 
-  println("ADNMatch Version 1")
-  val val2 = List(A,A,C,T,T)
-  val val3 = List(G,G,G,C,T)
-  val val1 = List(A,C,G,T)
-
-  // A(T|A), T∗(·∗)G, et T∗(·{3})G.
-  val seq1 = List(UneBase(A), Choix(UneBase(T), UneBase(A)))
-  val seq2 = List(Repete(UneBase(T)), Repete(Nqb), UneBase(G))
-  val seq3 = List(Repete(UneBase(T)), NFois(Nqb, 3), UneBase(G))
+  val a: String = scala.io.StdIn.readLine(">")
+  println(litRExp("(A)"))
 
 }
