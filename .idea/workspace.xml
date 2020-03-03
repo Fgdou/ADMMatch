@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c9cca7c6-eea7-4990-8d95-3906c9da86be" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ADNMatch.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1YcOXnXUxXpjinRlH3Ylcrdt1kZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c9cca7c6-eea7-4990-8d95-3906c9da86be" name="Default Changelist" comment="" />
+      <created>1583238457866</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583238457866</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="263" y="55" width="1089" height="719" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583238821621">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="263" y="55" width="1089" height="719" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1583238821621" />
+    <state x="623" y="314" width="378" height="171" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog" timestamp="1583238643732">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="623" y="314" width="378" height="171" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog/0.0.1536.824@0.0.1536.824" timestamp="1583238643732" />
+    <state x="658" y="289" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1583238578433">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="658" y="289" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1583238578433" />
+    <state x="464" y="0" key="CommitChangelistDialog2" timestamp="1583238755328">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="464" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1583238755328" />
+    <state x="401" y="133" key="Vcs.Push.Dialog.v2" timestamp="1583238760559">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="401" y="133" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1583238760559" />
+    <state x="505" y="224" key="com.intellij.ide.util.TipDialog" timestamp="1583238469614">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="505" y="224" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1583238469614" />
+  </component>
+</project>
