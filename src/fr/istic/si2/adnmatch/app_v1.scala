@@ -11,5 +11,5 @@ import fr.istic.si2.adnmatchlib._
 object ADNMatchV1 extends App {
 
   val a: String = scala.io.StdIn.readLine(">")
-  println(litRExp("(A)")
+  println(litRExp("(A)"))
 }
