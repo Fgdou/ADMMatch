@@ -54,7 +54,7 @@ object FonctionsRExp {
       case C :: l => "C" + listeBasesToString(l)
     }
   }
-
+̊
   /**
    * @param e une expression régulière
    * @return la représentation textuelle de e, avec toutes les parenthèses nécessaires
