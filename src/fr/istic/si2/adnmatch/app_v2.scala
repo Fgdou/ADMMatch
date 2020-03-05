@@ -12,25 +12,6 @@ import fr.istic.si2.adnmatchlib._
 object ADNMatchV2 extends App {
 
   println("ADNMatch Version 2")
-
-  val exp: String = scala.io.StdIn.readLine("Enter regular expression>")
-  val obj = litRExp(exp);
-
-  obj match {
-    case None    => println("Error litRExp")
-    case Some(e) =>
-      println("Expression : " + rExpToString(e))
-
-      val seq = lireSequence()
-
-      seq match{
-        case None => "Error sequence"
-        case Some(s) =>
-          if(matchComplet(e, s))
-            println("La séquence correspond à l'expression")
-          else
-            println("La séquence ne correspond pas à l'expression")
-      }
-  }
+  // TODO V2 - A compléter
 
 }
