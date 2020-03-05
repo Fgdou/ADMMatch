@@ -11,6 +11,18 @@ import fr.istic.si2.adnmatchlib._
 object ADNMatchV1 extends App {
 
   val a: String = scala.io.StdIn.readLine(">")
-  println(litRExp("(A)"))
+  val exp: Option[RExp] = litRExp(a)
 
+  exp match{
+    case None => println("Error LitRExp")
+    case Some(seq) => {
+      println(rExpToString(seq))
+      val seqlist: Option[List[Base]] = deroule(seq)
+      seqlist match{
+        case None => println("Error deroule")
+        case Some(seqbase) => println(listeBasesToString(seqbase))
+      }
+
+    }
+  }
 }
