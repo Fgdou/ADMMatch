@@ -13,13 +13,13 @@ object ADNMatchV1 extends App {
   val obj = litRExp(exp)
 
   obj match {
-    case None         => println("Error litRExp()")
+    case None      => println("Error litRExp()")
     case Some(obj) =>
       println("Expression : " + rExpToString(obj))
       val listExp = deroule(obj);
 
-      listExp match{
-        case None => println("Error deroule()")
+      listExp match {
+        case None          => println("Error deroule()")
         case Some(listExp) =>
           println("Example : " + listeBasesToString(listExp))
       }
