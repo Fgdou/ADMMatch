@@ -9,25 +9,105 @@ import fr.istic.si2.adnmatch.FonctionsRExp._
  * indiquant les résultats de recherche.
  */
 sealed trait Marqueur
+
 // TODO V2
 
 object RExpMatcher {
+  /**
+   * @param e une expression régulière
+   * @return si l'expression renvoie vide
+   */
+  def estVide(e: RExp): Boolean = {
+    e match {
+      case Repete(_)      => true
+      case UneBase(_)     => false
+      case Impossible     => false
+      case Vide           => true
+      case Concat(e1, e2) => estVide(e1) && estVide(e2)
+      case Choix(e1, e2)  => estVide(e1) || estVide(e2)
+      case NFois(e, _)    => estVide(e)
+      case _              => false
+    }
+  }
+
+  /**
+   * @param e une expression régulière
+   * @return une expression régulière simplifiée, sans % ni @
+   * @note %T|@ => T
+   */
+  def simplifier(e: RExp): RExp = {
+    e match {
+      case Choix(e1, e2)  =>
+        (simplifier(e1), simplifier(e2)) match {
+          case (Vide, _)       => Vide
+          case (_, Vide)       => Vide
+          case (Impossible, e) => e
+          case (e, Impossible) => e
+          case (e1, e2)        => Concat(e1, e2)
+        }
+      case Concat(e1, e2) =>
+        (simplifier(e1), simplifier(e2)) match {
+          case (Impossible, _) => Impossible
+          case (_, Impossible) => Impossible
+          case (Vide, Vide)    => Vide
+          case (Vide, e)       => e
+          case (e, Vide)       => e
+          case (e1, e2)        => Concat(e1, e2)
+        }
+      case NFois(e, n)    =>
+        simplifier(e) match {
+          case Vide       => Vide
+          case Impossible => Impossible
+          case e          => NFois(e, n)
+        }
+      case Repete(e)      =>
+        simplifier(e) match {
+          case Vide       => Vide
+          case Impossible => Vide
+          case e          => Repete(e)
+        }
+      case _              => e
+    }
+  }
 
   /**
    * @param e une expression régulière
    * @param b une base azotée
    * @return la dérivée de Brzozowski de e par rapport à b
    */
-  // TODO V2
-  def derivee(e: RExp, b: Base): RExp = ???
+  def derivee(e: RExp, b: Base): RExp = {
+    e match {
+      case UneBase(e)     =>
+        if (e == b)
+          Vide
+        else
+          Impossible
+      case Choix(e1, e2)  => Choix(derivee(e1, b), derivee(e2, b))
+      case Concat(e1, e2) =>
+        if (estVide(e1))
+          Choix(Concat(derivee(e1, b), e2), derivee(e2, b))
+        else
+          Concat(derivee(e1, b), e2)
+      case Nqb            => Vide
+      case NFois(e, n)    => Concat(derivee(e, b), NFois(e, n - 1))
+      case NFois(e, 1)    => derivee(e, b)
+      case Repete(e)      => Concat(derivee(e, b), Repete(e))
+      case Vide           => Impossible
+      case Impossible     => Impossible
+    }
+  }
 
   /**
-   * @param e une expression régulière
+   * @param e  une expression régulière
    * @param lb une liste de bases azotées
    * @return vrai ssi la liste lb entière est décrite par e
    */
-  // TODO V2
-  def matchComplet(e: RExp, lb: List[Base]): Boolean = ???
+  def matchComplet(e: RExp, lb: List[Base]): Boolean = {
+    lb match{
+      case l :: lb => matchComplet(derivee(e, l), lb)
+      case Nil => (simplifier(e) == Vide)
+    }
+  }
 
   /**
    * @param lb une liste de bases azotées
@@ -46,7 +126,7 @@ object RExpMatcher {
   def sequenceNonDecrite(lb: List[Base]): List[(Marqueur, Base)] = ???
 
   /**
-   * @param e une expression régulière
+   * @param e  une expression régulière
    * @param lb une liste de bases azotées
    * @return s'il existe, le plus petit prefixe de lb qui est décrit par e
    */
@@ -55,14 +135,14 @@ object RExpMatcher {
 
   /**
    * @param pref une liste de bases azotées *préfixe* de lb
-   * @param lb une liste de bases azotées
+   * @param lb   une liste de bases azotées
    * @return la sous-liste de lb située après le préfixe pref
    */
   // TODO V2
   def suppPrefixe(pref: List[Base], lb: List[Base]): List[Base] = ???
 
   /**
-   * @param e une expression régulière
+   * @param e  une expression régulière
    * @param lb une liste de bases
    * @return une liste  (m1, base1)::...::(mN,baseN)::Nil, qui marque,
    *         base après base, les sous-listes de lb décrites par e.

@@ -12,6 +12,16 @@ import fr.istic.si2.adnmatchlib._
 object ADNMatchV2 extends App {
 
   println("ADNMatch Version 2")
-  // TODO V2 - A compléter
+  litRExp("(A*)CT") match{
+    case None => ()
+    case Some(e) =>
+      val exp = derivee(e, C)
+      val simp = simplifier(exp)
+
+      println("Exp : " + rExpToString(exp));
+      println(exp)
+      println("Sim : " + rExpToString(simp));
+      println(simp)
+  }
 
 }
