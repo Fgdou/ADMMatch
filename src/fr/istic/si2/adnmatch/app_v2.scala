@@ -12,6 +12,19 @@ import fr.istic.si2.adnmatchlib._
 object ADNMatchV2 extends App {
 
   println("ADNMatch Version 2")
+
+  val e = litRExp("C(.*)A")
+  val s = lireSequence()
+
+  (e, s) match{
+    case (Some(e), Some(s)) =>
+      println(tousLesMatchs(e, s))
+    case _ => ()
+  }
+
+
+
+
   val exp: String = scala.io.StdIn.readLine("Enter regular expression>")
   val obj = litRExp(exp);
 

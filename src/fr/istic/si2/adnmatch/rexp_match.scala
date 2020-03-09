@@ -131,7 +131,7 @@ object RExpMatcher {
   def sequenceNonDecrite(lb: List[Base]): List[(Marqueur, Base)] = {
     lb match {
       case Nil    => Nil
-      case n :: l => (In, n) :: sequenceDecrite(l)
+      case n :: l => (In, n) :: sequenceNonDecrite(l)
     }
   }
 
@@ -140,16 +140,33 @@ object RExpMatcher {
    * @param lb une liste de bases azotées
    * @return s'il existe, le plus petit prefixe de lb qui est décrit par e
    */
-  // TODO V2
-  def prefixeMatch(e: RExp, lb: List[Base]): Option[List[Base]] = ???
+  def prefixeMatch(e: RExp, lb: List[Base]): Option[List[Base]] = {
+    lb match {
+      case Nil          => None
+      case base :: list =>
+        val der = simplifier(derivee(e, base))
+        if (der == Vide)
+          Some(base :: Nil)
+        else
+          prefixeMatch(der, list) match {
+            case None       => None
+            case Some(list) => Some(base :: list)
+          }
+    }
+  }
 
   /**
    * @param pref une liste de bases azotées *préfixe* de lb
    * @param lb   une liste de bases azotées
    * @return la sous-liste de lb située après le préfixe pref
    */
-  // TODO V2
-  def suppPrefixe(pref: List[Base], lb: List[Base]): List[Base] = ???
+  def suppPrefixe(pref: List[Base], lb: List[Base]): List[Base] = {
+    (pref, lb) match {
+      case (_ :: pref, _ :: lb) => suppPrefixe(pref, lb)
+      case (Nil, lb)            => lb
+      case (Nil, Nil)           => Nil
+    }
+  }
 
   /**
    * @param e  une expression régulière
@@ -158,8 +175,16 @@ object RExpMatcher {
    *         base après base, les sous-listes de lb décrites par e.
    *         Les basei sont les bases de lb dans l'ordre.
    */
-  // TODO V2
-  def tousLesMatchs(e: RExp, lb: List[Base]): List[(Marqueur, Base)] = ???
+  def tousLesMatchs(e: RExp, lb: List[Base]): List[(Marqueur, Base)] = {
+    lb match{
+      case Nil => Nil
+      case base :: list =>
+        prefixeMatch(e, lb) match{
+          case None => (Out, base) :: tousLesMatchs(e, list)
+          case Some(pref) => sequenceDecrite(pref) ++ tousLesMatchs(e, suppPrefixe(pref, lb))
+        }
+    }
+  }
 
   /**
    * @param lbm une liste de bases marquées selon un résultat de recherche
