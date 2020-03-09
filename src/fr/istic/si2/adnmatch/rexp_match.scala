@@ -10,7 +10,9 @@ import fr.istic.si2.adnmatch.FonctionsRExp._
  */
 sealed trait Marqueur
 
-// TODO V2
+case object In extends Marqueur
+
+case object Out extends Marqueur
 
 object RExpMatcher {
   /**
@@ -103,9 +105,9 @@ object RExpMatcher {
    * @return vrai ssi la liste lb entière est décrite par e
    */
   def matchComplet(e: RExp, lb: List[Base]): Boolean = {
-    lb match{
+    lb match {
       case l :: lb => matchComplet(derivee(e, l), lb)
-      case Nil => (simplifier(e) == Vide)
+      case Nil     => (simplifier(e) == Vide)
     }
   }
 
@@ -114,16 +116,24 @@ object RExpMatcher {
    * @return la liste des bases de lb, dans l'ordre, marquées pour indiquer
    *         que la totalité de lb est décrite
    */
-  // TODO V2
-  def sequenceDecrite(lb: List[Base]): List[(Marqueur, Base)] = ???
+  def sequenceDecrite(lb: List[Base]): List[(Marqueur, Base)] = {
+    lb match {
+      case Nil    => Nil
+      case n :: l => (In, n) :: sequenceDecrite(l)
+    }
+  }
 
   /**
    * @param lb une liste de bases azotées
    * @return la liste des bases de lb, dans l'ordre, marquées pour indiquer
    *         que la totalité de lb n'est pas décrite
    */
-  // TODO V2
-  def sequenceNonDecrite(lb: List[Base]): List[(Marqueur, Base)] = ???
+  def sequenceNonDecrite(lb: List[Base]): List[(Marqueur, Base)] = {
+    lb match {
+      case Nil    => Nil
+      case n :: l => (In, n) :: sequenceDecrite(l)
+    }
+  }
 
   /**
    * @param e  une expression régulière
