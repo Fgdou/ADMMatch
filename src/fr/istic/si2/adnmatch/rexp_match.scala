@@ -190,8 +190,16 @@ object RExpMatcher {
    * @param lbm une liste de bases marquées selon un résultat de recherche
    * @return une description textuelle du résultat pour l'utilisateur
    */
-  // TODO V2
-  def messageResultat(lbm: List[(Marqueur, Base)]): String = ???
+  def messageResultat(lbm: List[(Marqueur, Base)]): String = {
+    lbm match{
+      case Nil =>
+        "Cette liste ne contient pas de sous séquence"
+      case (In, _) :: list =>
+        "Cette liste contient une ou plusieurs sous séquence"
+      case (Out, _) :: list =>
+        messageResultat(list)
+    }
+  }
 
   /**
    * @param lb une liste de bases azotées marquées

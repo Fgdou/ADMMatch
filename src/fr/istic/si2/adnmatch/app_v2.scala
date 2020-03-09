@@ -13,36 +13,28 @@ object ADNMatchV2 extends App {
 
   println("ADNMatch Version 2")
 
-  val e = litRExp("C(.*)A")
-  val s = lireSequence()
-
-  (e, s) match{
-    case (Some(e), Some(s)) =>
-      println(tousLesMatchs(e, s))
-    case _ => ()
-  }
-
-
-
 
   val exp: String = scala.io.StdIn.readLine("Enter regular expression>")
   val obj = litRExp(exp);
+  val seq = lireSequence()
 
-  obj match {
-    case None    => println("Error litRExp")
-    case Some(e) =>
+
+  (obj, seq) match {
+    case (Some(e), Some(s)) =>
+
       println("Expression : " + rExpToString(e))
+      println("Sequence   : " + listeBasesToString(s))
 
-      val seq = lireSequence()
+      if (matchComplet(e, s))
+        println("La séquence correspond à l'expression")
+      else
+        println("La séquence ne correspond pas à l'expression")
 
-      seq match{
-        case None => "Error sequence"
-        case Some(s) =>
-          if(matchComplet(e, s))
-            println("La séquence correspond à l'expression")
-          else
-            println("La séquence ne correspond pas à l'expression")
-      }
+      println(messageResultat(tousLesMatchs(e, s)))
+
+    case (None, _) => println("Erreur expression")
+    case (_, None) => println("Erreur de sequence")
+    case _         => println("ERROR")
   }
 
 }
