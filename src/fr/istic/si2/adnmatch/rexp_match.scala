@@ -176,11 +176,11 @@ object RExpMatcher {
    *         Les basei sont les bases de lb dans l'ordre.
    */
   def tousLesMatchs(e: RExp, lb: List[Base]): List[(Marqueur, Base)] = {
-    lb match{
-      case Nil => Nil
+    lb match {
+      case Nil          => Nil
       case base :: list =>
-        prefixeMatch(e, lb) match{
-          case None => (Out, base) :: tousLesMatchs(e, list)
+        prefixeMatch(e, lb) match {
+          case None       => (Out, base) :: tousLesMatchs(e, list)
           case Some(pref) => sequenceDecrite(pref) ++ tousLesMatchs(e, suppPrefixe(pref, lb))
         }
     }
@@ -191,10 +191,10 @@ object RExpMatcher {
    * @return une description textuelle du résultat pour l'utilisateur
    */
   def messageResultat(lbm: List[(Marqueur, Base)]): String = {
-    lbm match{
-      case Nil =>
+    lbm match {
+      case Nil              =>
         "Cette liste ne contient pas de sous séquence"
-      case (In, _) :: list =>
+      case (In, _) :: list  =>
         "Cette liste contient une ou plusieurs sous séquence"
       case (Out, _) :: list =>
         messageResultat(list)
@@ -206,14 +206,22 @@ object RExpMatcher {
    * @return liste des mêmes bases que lb, mais où tous les marqueurs indiquent
    *         une non-correspondance
    */
-  // TODO V3
-  def annulerResultat(lb: List[(Marqueur, Base)]): List[(Marqueur, Base)] = ???
+  def annulerResultat(lb: List[(Marqueur, Base)]): List[(Marqueur, Base)] = {
+    lb match {
+      case Nil               => Nil
+      case (_, base) :: list => (Out, base) :: annulerResultat(list)
+    }
+  }
 
   /**
    * @param lbm une liste de bases azotées marquées
    * @return la liste des bases de lbm dont on a oublié les marqueurs, en conservant l'ordre
    */
-  // TODO V3
-  def sansMarqueurs(lbm: List[(Marqueur, Base)]): List[Base] = ???
+  def sansMarqueurs(lbm: List[(Marqueur, Base)]): List[Base] = {
+    lbm match {
+      case Nil               => Nil
+      case (_, base) :: list => base :: annulerResultat(list)
+    }
+  }
 
 }
