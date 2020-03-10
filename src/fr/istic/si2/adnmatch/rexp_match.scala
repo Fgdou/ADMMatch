@@ -27,6 +27,7 @@ object RExpMatcher {
       case Vide           => true
       case Concat(e1, e2) => estVide(e1) && estVide(e2)
       case Choix(e1, e2)  => estVide(e1) || estVide(e2)
+      case NFois(_, 0)    => true
       case NFois(e, _)    => estVide(e)
       case _              => false
     }
