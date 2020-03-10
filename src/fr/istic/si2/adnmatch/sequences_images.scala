@@ -7,14 +7,40 @@ import fr.istic.si2.adnmatch.RExpMatcher._
 
 object SequencesImages {
 
+  def getLine(list: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
+    list match {
+      case b :: list =>
+        if (n == 0)
+          Nil
+        else
+          b :: getLine(list, n - 1)
+      case Nil       => Nil
+    }
+  }
+
+  def suppLine(list: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
+    list match {
+      case b :: list =>
+        if (n == 0)
+          list
+        else
+          suppLine(list, n - 1)
+      case Nil       => Nil
+    }
+  }
+
   /**
-   * @param lmb une liste de bases marquées
+   * @param lmb    une liste de bases marquées
    * @param tligne entier strictement positif, représentant la taille d'une ligne en nombre de bases marquées
    * @return une liste contenant des sous-listes de lmb, toutes de taille tligne, sauf la dernière qui
    *         peut être de taille inférieure.
    */
-  // TODO V3
-  def lignes(lmb: List[(Marqueur, Base)], tligne: Int): List[List[(Marqueur, Base)]] = ???
+  def lignes(lmb: List[(Marqueur, Base)], tligne: Int): List[List[(Marqueur, Base)]] = {
+    lmb match {
+      case Nil => Nil
+      case _   => getLine(lmb, tligne) :: lignes(suppLine(lmb, tligne), tligne)
+    }
+  }
 
   /**
    * Taille du texte à utiliser pour représenter
