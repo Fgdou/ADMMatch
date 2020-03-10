@@ -7,6 +7,13 @@ import fr.istic.si2.adnmatch.RExpMatcher._
 
 object SequencesImages {
 
+  /**
+   * @param list une liste de base
+   * @param n la taille d'une ligne
+   * @return une liste des n premiers éléments
+   * @note liste = ABCDEF et n = 3
+   *       return ABC
+   */
   def getLine(list: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
     list match {
       case b :: list =>
@@ -18,6 +25,11 @@ object SequencesImages {
     }
   }
 
+  /**
+   * @param list une liste de base
+   * @param n une taille de ligne
+   * @return la liste sans les n premiers éléments
+   */
   def suppLine(list: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
     list match {
       case b :: list =>
