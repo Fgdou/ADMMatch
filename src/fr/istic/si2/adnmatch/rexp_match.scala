@@ -192,27 +192,17 @@ object RExpMatcher {
     }
   }
 
+  /**
+   * @param lbm a marked list with sequences in and out the sequences
+   * @return a list of strings containing just the (In)bases
+   */
   def messageString(lbm: List[(Marqueur, Base)]): List[String] = {
     lbm match {
       case Nil                                 => Nil
       case (In, base1) :: (In, base2) :: nlist => listeBasesToString(base1 :: Nil) :: listeBasesToString(base2 :: Nil) :: messageString(nlist)
-      case (Out, _) :: (In, base2) :: nlist    => " and " :: listeBasesToString(base2 :: Nil) :: messageString(nlist)
+      case (Out, _) :: (In, base2) :: nlist    => ", " :: listeBasesToString(base2 :: Nil) :: messageString(nlist)
       case (In, base1) :: (Out, _) :: nlist    => listeBasesToString(base1 :: Nil) :: messageString(nlist)
       case (Out, _) :: (Out, _) :: nlist       => messageString(nlist)
-    }
-  }
-
-  def prep(ls: List[String]): List[String] = {
-    if (ls.head == " and ")
-      ls.tail
-    else
-      ls
-  }
-
-  def message(ls: List[String]): String = {
-    ls match {
-      case Nil             => ""
-      case string :: nlist => string + message(nlist)
     }
   }
 
@@ -221,13 +211,10 @@ object RExpMatcher {
    * @return une description textuelle du résultat pour l'utilisateur
    */
   def messageResultat(lbm: List[(Marqueur, Base)]): String = {
-    val list1 = messageString(lbm)
-    list1 match {
-      case x :: xs => {
-        val list2 = prep(list1)
-        "The list contains the sequences (note some sequences maybe joint if the directly follow each other on the list )" + message(list2)
-      }
-      case Nil     => "The list has no sub sequences"
+    lbm match {
+      case Nil               => "The list has no sub sequences"
+      case (In, _) :: nlist  => "The list has at list one sub sequence"
+      case (Out, _) :: nlist => messageResultat(nlist)
     }
   }
 
@@ -236,11 +223,10 @@ object RExpMatcher {
    * @return liste des mêmes bases que lb, mais où tous les marqueurs indiquent
    *         une non-correspondance
    */
-  // TODO V3
   def annulerResultat(lb: List[(Marqueur, Base)]): List[(Marqueur, Base)] = {
-    lb match{
-      case Nil => Nil
-      case (_, base)::nlist => (Out, base)::annulerResultat(nlist)
+    lb match {
+      case Nil                => Nil
+      case (_, base) :: nlist => (Out, base) :: annulerResultat(nlist)
     }
   }
 
@@ -248,7 +234,6 @@ object RExpMatcher {
    * @param lbm une liste de bases azotées marquées
    * @return la liste des bases de lbm dont on a oublié les marqueurs, en conservant l'ordre
    */
-  // TODO V3
   def sansMarqueurs(lbm: List[(Marqueur, Base)]): List[Base] = {
     lbm match {
       case Nil                => Nil

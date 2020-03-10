@@ -8,13 +8,47 @@ import fr.istic.si2.adnmatch.RExpMatcher._
 object SequencesImages {
 
   /**
-   * @param lmb une liste de bases marquées
+   * @param lmb    une liste de bases marquées
    * @param tligne entier strictement positif, représentant la taille d'une ligne en nombre de bases marquées
    * @return une liste contenant des sous-listes de lmb, toutes de taille tligne, sauf la dernière qui
    *         peut être de taille inférieure.
    */
-  // TODO V3
-  def lignes(lmb: List[(Marqueur, Base)], tligne: Int): List[List[(Marqueur, Base)]] = ???
+  def lignes(lmb: List[(Marqueur, Base)], tligne: Int): List[List[(Marqueur, Base)]] = {
+    lmb match {
+      case Nil => Nil
+      case _ => returnLigne(lmb, tligne) :: lignes(cutLigne(lmb, tligne), tligne)
+    }
+  }
+
+  /**
+   * @param lmb a list of bases with their markers
+   * @param n the length we are working with
+   * @return a smaller
+   */
+  def returnLigne(lmb: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
+    lmb match {
+      case mbase :: nlist => {
+        if (n == 0)
+          Nil
+        else
+          mbase :: returnLigne(nlist, n - 1)
+      }
+      case Nil            => Nil
+    }
+  }
+
+  def cutLigne(lmb: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
+    lmb match {
+      case mbase :: nlist => {
+        if (n == 0)
+          nlist
+        else
+          returnLigne(nlist, n - 1)
+      }
+      case Nil            => Nil
+    }
+  }
+
 
   /**
    * Taille du texte à utiliser pour représenter
