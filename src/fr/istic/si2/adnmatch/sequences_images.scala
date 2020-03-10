@@ -9,7 +9,7 @@ object SequencesImages {
 
   /**
    * @param list une liste de base
-   * @param n la taille d'une ligne
+   * @param n    la taille d'une ligne
    * @return une liste des n premiers éléments
    * @note liste = ABCDEF et n = 3
    *       return ABC
@@ -27,7 +27,7 @@ object SequencesImages {
 
   /**
    * @param list une liste de base
-   * @param n une taille de ligne
+   * @param n    une taille de ligne
    * @return la liste sans les n premiers éléments
    */
   def suppLine(list: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
@@ -64,15 +64,32 @@ object SequencesImages {
    * @param mb une base azotée marquée
    * @return une image représentant la base avec son marqueur visuel
    */
-  // TODO V3
-  def marqueurBaseToImage(mb: (Marqueur, Base)): Image = ???
+  def marqueurBaseToImage(mb: (Marqueur, Base)): Image = {
+    val char: String = mb match {
+      case (_, A) => "A"
+      case (_, G) => "G"
+      case (_, T) => "T"
+      case (_, C) => "C"
+    }
+
+    val color: Color = mb match {
+      case (Out, _) => BLACK
+      case (In, _)  => Color(0,100,0,255)
+    }
+
+    FillColor(LineColor(Text(char, fontSizeBase), color), color)
+  }
 
   /**
    * @param ligne une liste de bases azotées marquées
    * @return une image représentant les bases marquées de ligne, dans l'ordre, toutes sur la même ligne
    */
-  // TODO V3
-  def imageUneLigne(ligne: List[(Marqueur, Base)]): Image = ???
+  def imageUneLigne(ligne: List[(Marqueur, Base)]): Image = {
+    ligne match {
+      case Nil       => Empty
+      case n :: list => Beside(marqueurBaseToImage(n), imageUneLigne(list))
+    }
+  }
 
   /**
    * @param llignes une liste de listes de bases azotées marquées
@@ -80,7 +97,11 @@ object SequencesImages {
    *         Chaque élément de llignes est sur une ligne distincte.
    *         Les lignes sont visualisées les unes en dessous des autres.
    */
-  // TODO V3
-  def imagePlusieursLignes(llignes: List[List[(Marqueur, Base)]]): Image = ???
+  def imagePlusieursLignes(llignes: List[List[(Marqueur, Base)]]): Image = {
+    llignes match {
+      case Nil       => Empty
+      case n :: list => Below(imageUneLigne(n), imagePlusieursLignes(list))
+    }
+  }
 
 }

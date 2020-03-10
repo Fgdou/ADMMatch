@@ -220,7 +220,7 @@ object RExpMatcher {
   def sansMarqueurs(lbm: List[(Marqueur, Base)]): List[Base] = {
     lbm match {
       case Nil               => Nil
-      case (_, base) :: list => base :: annulerResultat(list)
+      case (_, base) :: list => base :: sansMarqueurs(list)
     }
   }
 
