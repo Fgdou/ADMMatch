@@ -211,8 +211,8 @@ object RExpMatcher {
 
   def message(ls: List[String]): String = {
     ls match {
-      case Nil => ""
-      case string::nlist => string + message(nlist)
+      case Nil             => ""
+      case string :: nlist => string + message(nlist)
     }
   }
 
@@ -222,12 +222,12 @@ object RExpMatcher {
    */
   def messageResultat(lbm: List[(Marqueur, Base)]): String = {
     val list1 = messageString(lbm)
-    list1 match{
-      case x::xs => {
+    list1 match {
+      case x :: xs => {
         val list2 = prep(list1)
-        "The list contains the sequences " + message(list2)
+        "The list contains the sequences (note some sequences maybe joint if the directly follow each other on the list )" + message(list2)
       }
-      case Nil=> "The list has no sub sequences"
+      case Nil     => "The list has no sub sequences"
     }
   }
 
@@ -237,11 +237,23 @@ object RExpMatcher {
    *         une non-correspondance
    */
   // TODO V3
-  def annulerResultat(lb: List[(Marqueur, Base)]): List[(Marqueur, Base)] = ???
+  def annulerResultat(lb: List[(Marqueur, Base)]): List[(Marqueur, Base)] = {
+    lb match{
+      case Nil => Nil
+      case (_, base)::nlist => (Out, base)::annulerResultat(nlist)
+    }
+  }
 
   /**
    * @param lbm une liste de bases azotées marquées
    * @return la liste des bases de lbm dont on a oublié les marqueurs, en conservant l'ordre
    */
   // TODO V3
-  def sansMarqueurs(lbm: List[(Marqueur, Base)]): List[Base] = ???
+  def sansMarqueurs(lbm: List[(Marqueur, Base)]): List[Base] = {
+    lbm match {
+      case Nil                => Nil
+      case (_, base) :: nlist => base :: sansMarqueurs(nlist)
+    }
+  }
+
+}
