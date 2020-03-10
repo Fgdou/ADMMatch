@@ -23,7 +23,7 @@ object SequencesImages {
   /**
    * @param lmb a list of bases with their markers
    * @param n the length we are working with
-   * @return a smaller
+   * @return a smaller list based on the length of n cut from the beginning
    */
   def returnLigne(lmb: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
     lmb match {
@@ -37,6 +37,11 @@ object SequencesImages {
     }
   }
 
+  /**
+   * @param lmb a list of bases with their markers
+   * @param n the length we are working with
+   * @return a smaller list based on the length of n cut from the end
+   */
   def cutLigne(lmb: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
     lmb match {
       case mbase :: nlist => {
