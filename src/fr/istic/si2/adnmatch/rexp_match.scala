@@ -1,5 +1,6 @@
 package fr.istic.si2.adnmatch
 
+import com.sun.tools.internal.ws.processor.modeler.annotation.TypeMoniker
 import fr.istic.si2.scribble._
 import fr.istic.si2.adnmatch._
 import fr.istic.si2.adnmatch.FonctionsRExp._
@@ -126,15 +127,13 @@ object RExpMatcher {
   }
 
 
-
-
   /**
    * @param lb une liste de bases azotées
    * @return la liste des bases de lb, dans l'ordre, marquées pour indiquer
    *         que la totalité de lb n'est pas décrite
    */
   // TODO V2
-  def sequenceNonDecrite (lb: List[Base] ): List[(Marqueur, Base)] = {
+  def sequenceNonDecrite(lb: List[Base]): List[(Marqueur, Base)] = {
     lb match {
       case Nil           => Nil
       case base :: nlist => (Out, base) :: sequenceDecrite(nlist)
@@ -183,13 +182,37 @@ object RExpMatcher {
    */
   // TODO V2
   def tousLesMatchs(e: RExp, lb: List[Base]): List[(Marqueur, Base)] = {
-    lb match{
-      case Nil => Nil
+    lb match {
+      case Nil          => Nil
       case base :: list =>
-        prefixeMatch(e, lb) match{
-          case None => (Out, base) :: tousLesMatchs(e, list)
+        prefixeMatch(e, lb) match {
+          case None       => (Out, base) :: tousLesMatchs(e, list)
           case Some(pref) => sequenceDecrite(pref) ++ tousLesMatchs(e, suppPrefixe(pref, lb))
         }
+    }
+  }
+
+  def messageString(lbm: List[(Marqueur, Base)]): List[String] = {
+    lbm match {
+      case Nil                                 => Nil
+      case (In, base1) :: (In, base2) :: nlist => listeBasesToString(base1 :: Nil) :: listeBasesToString(base2 :: Nil) :: messageString(nlist)
+      case (Out, _) :: (In, base2) :: nlist    => " and " :: listeBasesToString(base2 :: Nil) :: messageString(nlist)
+      case (In, base1) :: (Out, _) :: nlist    => listeBasesToString(base1 :: Nil) :: messageString(nlist)
+      case (Out, _) :: (Out, _) :: nlist       => messageString(nlist)
+    }
+  }
+
+  def prep(ls: List[String]): List[String] = {
+    if (ls.head == " and ")
+      ls.tail
+    else
+      ls
+  }
+
+  def message(ls: List[String]): String = {
+    ls match {
+      case Nil => ""
+      case string::nlist => string + message(nlist)
     }
   }
 
@@ -197,15 +220,14 @@ object RExpMatcher {
    * @param lbm une liste de bases marquées selon un résultat de recherche
    * @return une description textuelle du résultat pour l'utilisateur
    */
-  // TODO V2
   def messageResultat(lbm: List[(Marqueur, Base)]): String = {
-    lbm match{
-      case Nil =>
-        "This List has no sequences"
-      case (In, _) :: list =>
-        "This list contains at least one sequence"
-      case (Out, _) :: list =>
-        messageResultat(list)
+    val list1 = messageString(lbm)
+    list1 match{
+      case x::xs => {
+        val list2 = prep(list1)
+        "The list contains the sequences " + message(list2)
+      }
+      case Nil=> "The list has no sub sequences"
     }
   }
 
@@ -215,11 +237,11 @@ object RExpMatcher {
    *         une non-correspondance
    */
   // TODO V3
-  def annulerResultat (lb: List[(Marqueur, Base)] ): List[(Marqueur, Base)] = ???
+  def annulerResultat(lb: List[(Marqueur, Base)]): List[(Marqueur, Base)] = ???
 
   /**
    * @param lbm une liste de bases azotées marquées
    * @return la liste des bases de lbm dont on a oublié les marqueurs, en conservant l'ordre
    */
   // TODO V3
-  def sansMarqueurs (lbm: List[(Marqueur, Base)] ): List[Base] = ???
+  def sansMarqueurs(lbm: List[(Marqueur, Base)]): List[Base] = ???
