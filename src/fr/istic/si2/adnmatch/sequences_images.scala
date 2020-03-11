@@ -46,7 +46,7 @@ object SequencesImages {
     lmb match {
       case mbase :: nlist => {
         if (n == 0)
-          nlist
+          mbase::nlist
         else
           cutLigne(nlist, n - 1)
       }
@@ -76,7 +76,7 @@ object SequencesImages {
     val img = Text(text, fontSizeBase)
     val colour = mb match {
       case (In, _)  => Color(0, 100, 0, 255)
-      case (Out, _) => BLACK
+      case (Out, _) => Color(100, 0, 0, 255)
     }
 
     LineColor(fillColor(img, colour), colour)
