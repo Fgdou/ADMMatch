@@ -104,6 +104,10 @@ object RExpMatcher {
    * @param e  une expression régulière
    * @param lb une liste de bases azotées
    * @return vrai ssi la liste lb entière est décrite par e
+   *
+   * @note Les tests JUnit et les tests que nous avons effectués dans la V2 marchent tous pour le matchComplet.
+   *       Or la v3 affiche toute la sequence en vert peu importe l'expression.
+   *       Nous ne comprenons pas.
    */
   def matchComplet(e: RExp, lb: List[Base]): Boolean = {
     lb match {

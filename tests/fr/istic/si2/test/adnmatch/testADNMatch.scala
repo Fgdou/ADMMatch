@@ -91,6 +91,12 @@ class ADNMatchTest {
     assertEquals(Impossible, simplifier(derivee(Repete(UneBase(T)), A)))
   }
 
+  /** ---------------------------------------------------------------------------------------------
+   * Les tests JUnit et les tests que nous avons effectués dans la V2 marchent tous pour le matchComplet.
+   * Or la v3 affiche toute la sequence en vert peu importe l'expression.
+   * Nous ne comprenons pas.
+   * ------------------------------------------------------------------------------------------------
+   */
   @Test
   def testMatchComplet(): Unit = {
     // m(A, A) = true
