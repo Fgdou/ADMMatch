@@ -142,17 +142,19 @@ object RExpMatcher {
    * @return s'il existe, le plus petit prefixe de lb qui est décrit par e
    */
   def prefixeMatch(e: RExp, lb: List[Base]): Option[List[Base]] = {
-    if(e == Vide)
-      Some(Nil)
-    else
-      lb match {
-        case Nil          => None
-        case base :: list =>
-          prefixeMatch(simplifier(derivee(e, base)), list) match {
-            case None       => None
-            case Some(list) => Some(base :: list)
-          }
-      }
+    e match {
+      case Vide       => Some(Nil)
+      case Impossible => None
+      case _          =>
+        lb match {
+          case Nil          => None
+          case base :: list =>
+            prefixeMatch(simplifier(derivee(e, base)), list) match {
+              case None       => None
+              case Some(list) => Some(base :: list)
+            }
+        }
+    }
   }
 
   /**
@@ -180,8 +182,8 @@ object RExpMatcher {
       case Nil          => Nil
       case base :: list =>
         prefixeMatch(e, lb) match {
-          case None       => (Out, base) :: tousLesMatchs(e, list)
-          case Some(pref) => sequenceDecrite(pref) ++ tousLesMatchs(e, suppPrefixe(pref, lb))
+          case None | Some(Nil) => (Out, base) :: tousLesMatchs(e, list)
+          case Some(pref)       => sequenceDecrite(pref) ++ tousLesMatchs(e, suppPrefixe(pref, lb))
         }
     }
   }
