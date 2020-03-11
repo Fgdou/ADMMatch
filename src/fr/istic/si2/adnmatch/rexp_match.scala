@@ -108,7 +108,7 @@ object RExpMatcher {
   def matchComplet(e: RExp, lb: List[Base]): Boolean = {
     lb match {
       case l :: lb => matchComplet(derivee(e, l), lb)
-      case Nil     => (simplifier(e) == Vide)
+      case Nil     => estVide(simplifier(e))
     }
   }
 

@@ -113,6 +113,14 @@ class ADNMatchTest {
     assertEquals(false, matchComplet(Nqb, List()))
     // m(.., GTA) = false
     assertEquals(false, matchComplet(Concat(Nqb, Nqb), List(G, T, A)))
+    // m(A*, ) = true
+    assertEquals(true, matchComplet(Repete(UneBase(A)), List()))
+    // m(A*, AA) = true
+    assertEquals(true, matchComplet(Repete(UneBase(A)), List(A,A)))
+    // m(A*, AT) = false
+    assertEquals(true, matchComplet(Repete(UneBase(A)), List(A,A)))
+    // m(A*, T) = false
+    assertEquals(false, matchComplet(Repete(UneBase(A)), List(T)))
     // m(A|G, A) = true
     assertEquals(true, matchComplet(Choix(UneBase(A), UneBase(G)), List(A)))
     // m(AG, A) = false
