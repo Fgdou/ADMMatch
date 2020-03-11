@@ -32,6 +32,7 @@ class ADNMatchTest {
     assertEquals(listeBasesToString(A::T::G::C::Nil), "ATGC")
   }
 
+  @Test
   def testrExpToString: Unit ={
     assertEquals(rExpToString(Impossible),"@")
     assertEquals(rExpToString(Vide),"%")
@@ -42,6 +43,7 @@ class ADNMatchTest {
     assertEquals(rExpToString(Repete(Choix(UneBase(A), UneBase(C)))),"((A|C))*")
   }
 
+  @Test
   def testDeroule: Unit ={
     assertEquals(deroule(Impossible), None)
     assertEquals(deroule(Repete(Choix(UneBase(A), UneBase(C)))), Some(A::Nil))
@@ -49,6 +51,6 @@ class ADNMatchTest {
     assertEquals(deroule(Concat(NFois(UneBase(T), 3), Choix(Nqb, Vide))), Some(T::T::T::A::Nil))
     assertEquals(deroule(Vide), Some(Nil))
     assertEquals(deroule(NFois(Concat(UneBase(A), UneBase(C)), 5)), Some(A::C::A::C::A::C::A::C::A::C::Nil))
-
+    assertEquals(deroule(Choix(Concat(Choix(NFois(Nqb, 3), Impossible), UneBase(T)), Choix(Repete(Nqb), UneBase(G)))), Some(A::A::A::T::Nil))
   }
 }
