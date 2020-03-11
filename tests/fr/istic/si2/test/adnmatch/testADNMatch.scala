@@ -40,7 +40,7 @@ class ADNMatchTest {
     assertEquals(simplifier(NFois(Vide, 8)), Vide)
     assertEquals(simplifier(Repete(Vide)), Vide)
     assertEquals(simplifier(Repete(Impossible)), Vide)
-    assertEquals(simplifier(NFois(Impossible, 8)), Vide)
+    assertEquals(simplifier(NFois(Impossible, 8)), Impossible)
     assertEquals(simplifier(Concat(Impossible, Vide)), Impossible)
     assertEquals(simplifier(Choix(Impossible, Vide)), Vide)
     assertEquals(simplifier(Concat(Nqb, Vide)), Nqb)
@@ -49,9 +49,14 @@ class ADNMatchTest {
 
   @Test
   def testDerivee(): Unit = {
-    assertEquals(derivee(Vide, A), Impossible)
-    assertEquals(derivee(Nqb, A), Vide)
-    assertEquals(derivee(Repete(Nqb), A), Concat(Vide, Repete(Nqb)))
+    assertEquals(simplifier(derivee(Vide, A)), Impossible)
+    assertEquals(simplifier(derivee(Nqb, A)), Vide)
+    assertEquals(simplifier(derivee(Repete(Nqb), A)), Repete(Nqb))
+    assertEquals(simplifier(derivee(NFois(UneBase(A), 2), A)), Vide)
+    assertEquals(simplifier(derivee(UneBase(A), A)), Vide)
+    assertEquals(simplifier(derivee(UneBase(G), A)), Impossible)
+    assertEquals(simplifier(derivee(Choix(UneBase(A), UneBase(G)), A)), Vide)
+    assertEquals(simplifier(derivee(Choix(UneBase(T), UneBase(G)), A)), Impossible)
   }
 
 }
