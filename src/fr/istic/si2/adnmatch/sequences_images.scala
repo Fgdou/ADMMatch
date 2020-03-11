@@ -34,7 +34,7 @@ object SequencesImages {
     list match {
       case b :: list =>
         if (n == 0)
-          list
+          b :: list
         else
           suppLine(list, n - 1)
       case Nil       => Nil
