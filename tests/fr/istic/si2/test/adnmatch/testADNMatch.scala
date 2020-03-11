@@ -159,10 +159,10 @@ class ADNMatchTest {
     assertEquals(None, prefixeMatch(Impossible, List()))
     // p(@, A) = None
     assertEquals(None, prefixeMatch(Impossible, List(A)))
-    // p(%,  ) = ()
-    assertEquals(Some(List()), prefixeMatch(Vide, List()))
-    // p(%, A) = ()
-    assertEquals(Some(List()), prefixeMatch(Vide, List(A)))
+    // p(%,  ) = None
+    assertEquals(None, prefixeMatch(Vide, List()))
+    // p(%, A) = None
+    assertEquals(None, prefixeMatch(Vide, List(A)))
     // p(A, A) = A
     assertEquals(Some(List(A)), prefixeMatch(UneBase(A), List(A)))
     // p(A, AG) = A
@@ -197,6 +197,12 @@ class ADNMatchTest {
     assertEquals(List((Out, A)), tousLesMatchs(Impossible, List(A)))
     // m(., A) = (In, A)
     assertEquals(List((In, A)), tousLesMatchs(Nqb, List(A)))
+    // m(A*, A) = (In, A)
+    assertEquals(List((In, A)), tousLesMatchs(Repete(UneBase(A)), List(A)))
+    // m(A*, G) = (Out, G)
+    assertEquals(List((Out, G)), tousLesMatchs(Repete(UneBase(A)), List(G)))
+    // m(A*, AG) = (In, A)(Out, G)
+    assertEquals(List((In, A), (Out, G)), tousLesMatchs(Repete(UneBase(A)), List(A, G)))
     // m(A, ATAT) = (In, A)(Out, T)(In, A)(Out, T)
     assertEquals(List((In, A),(Out, T),(In, A),(Out, T)), tousLesMatchs(UneBase(A), List(A,T,A,T)))
   }

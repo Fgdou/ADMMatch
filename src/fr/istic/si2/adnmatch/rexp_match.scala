@@ -142,18 +142,18 @@ object RExpMatcher {
    * @return s'il existe, le plus petit prefixe de lb qui est décrit par e
    */
   def prefixeMatch(e: RExp, lb: List[Base]): Option[List[Base]] = {
-    e match {
-      case Vide       => Some(Nil)
-      case Impossible => None
-      case _          =>
-        lb match {
-          case Nil          => None
-          case base :: list =>
-            prefixeMatch(simplifier(derivee(e, base)), list) match {
-              case None       => None
-              case Some(list) => Some(base :: list)
-            }
-        }
+    lb match {
+      case Nil          => None
+      case base :: list =>
+        val derive = simplifier(derivee(e, base))
+
+        if (estVide(derive))
+          Some(base :: Nil)
+        else
+          prefixeMatch(derive, list) match {
+            case None       => None
+            case Some(list) => Some(base :: list)
+          }
     }
   }
 
