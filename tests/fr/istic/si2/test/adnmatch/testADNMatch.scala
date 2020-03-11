@@ -51,6 +51,7 @@ class ADNMatchTest {
     assertEquals(Some(A :: A :: A :: T :: Nil), deroule(Choix(Concat(Choix(NFois(Nqb, 3), Impossible), UneBase(T)), Choix(Repete(Nqb), UneBase(G)))))
   }
 
+  //.....................................Values used for the lignes function............................
   val testList: List[(Marqueur, Base)] = List(
     (In, A), (Out, G), (In, T), (Out, C),
     (In, C), (Out, A), (In, G), (Out, T),
@@ -106,6 +107,7 @@ class ADNMatchTest {
     (In, C) :: (Out, A) :: (In, G) :: (Out, T) :: Nil) ::
     ((In, T) :: (Out, C) :: (In, A) :: (Out, G) ::
     (In, G) :: (Out, T) :: (In, C) :: (Out, A) :: Nil) :: Nil
+  //......................................................................................................
 
   @Test
   def testlignes: Unit = {
@@ -128,6 +130,7 @@ class ADNMatchTest {
     assertEquals(restList2, cutLigne(testList, 2))
   }
 
+  //..........................Values Used for the image tets.........................................
   val outG: Image = LineColor(fillColor(Text("G", 14), Color(100, 0, 0, 255)), Color(100, 0, 0, 255))
   val outT: Image = LineColor(fillColor(Text("T", 14), Color(100, 0, 0, 255)), Color(100, 0, 0, 255))
   val outC: Image = LineColor(fillColor(Text("C", 14), Color(100, 0, 0, 255)), Color(100, 0, 0, 255))
@@ -139,6 +142,7 @@ class ADNMatchTest {
   val inA: Image = LineColor(fillColor(Text("A", 14), Color(0, 100, 0, 255)), Color(0, 100, 0, 255))
 
   val empty: Image = Empty
+  //......................................................................................................
 
 
   @Test
@@ -153,6 +157,7 @@ class ADNMatchTest {
     assertEquals(outC, marqueurBaseToImage((Out, C)))
   }
 
+  //.................................Values used for my imagesurligne........................................
   val imglist1: List[(Marqueur, Base)] = List(
     (In, A),(Out, G),(In, T),(Out, C)
   )
@@ -200,6 +205,7 @@ class ADNMatchTest {
   val imgLs6: Image = {
     Beside(inA, Beside(outG, Beside(inA, Beside(outG, empty))))
   }
+  //......................................................................................................
 
   @Test
   def testimageUneLigne: Unit = {
@@ -211,6 +217,7 @@ class ADNMatchTest {
     assertEquals(imgLs6, imageUneLigne(imglist6))
   }
 
+  //.......................................values used for imageplsligne...................................
   val imgplist1: List[List[(Marqueur, Base)]]= List(
     List((In, A),(Out, G),(In, A),(Out, G)), List((Out, A),(In, G),(Out, T),(In, C)), List((In, T),(Out, C),(In, A),(Out, G))
   )
@@ -242,6 +249,7 @@ class ADNMatchTest {
   val imgpLs4: Image = {
     Below(imgLs4, Below(imgLs5, Below(imgLs6, empty)))
   }
+  //......................................................................................................
 
 @Test
   def testimagePlusieursLignes: Unit = {
