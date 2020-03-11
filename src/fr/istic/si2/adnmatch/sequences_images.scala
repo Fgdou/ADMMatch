@@ -73,7 +73,7 @@ object SequencesImages {
     }
 
     val color: Color = mb match {
-      case (Out, _) => BLACK
+      case (Out, _) => Color(100, 0, 0, 255)
       case (In, _)  => Color(0,100,0,255)
     }
 
