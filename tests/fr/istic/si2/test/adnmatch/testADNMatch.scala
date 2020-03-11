@@ -31,21 +31,42 @@ class ADNMatchTest {
 
   @Test
   def testrExpToString: Unit = {
+    //Impossible =  @
     assertEquals("@", rExpToString(Impossible))
+
+    //Vide = %
     assertEquals("%", rExpToString(Vide))
+
+    //Nqb = .
     assertEquals(".", rExpToString(Nqb))
+
+    //NFois(e1, n)) = (e1){n}
     assertEquals("(A){6}", rExpToString(NFois(UneBase(A), 6)))
+
+    // Concat(UneBase(A), Choix(UneBase(A), UneBase(C)))) = A(A|C)/
     assertEquals("A(A|C)", rExpToString(Concat(UneBase(A), Choix(UneBase(A), UneBase(C)))))
+
+    //Repete(e1) = (e1)*
     assertEquals("(A)*", rExpToString(Repete(UneBase(A))))
+
+    //Repete(Choix(UneBase(A), UneBase(C)))) = ((A|C))*
     assertEquals("((A|C))*", rExpToString(Repete(Choix(UneBase(A), UneBase(C)))))
   }
 
   @Test
   def testDeroule: Unit = {
+    //deroule(@) = None
     assertEquals(deroule(Impossible), None)
+
+    //deroule(Choix(e1, e2)) = Some(e1 :: Nil);
+    //deroule(Repete(e1)) = Some(e1 :: Nil);
     assertEquals(Some(A :: Nil), deroule(Repete(Choix(UneBase(A), UneBase(C)))))
+
+    //deroule(.) = Some(List(A))
     assertEquals(Some(List(A)), deroule(Nqb))
     assertEquals(Some(T :: T :: T :: A :: Nil), deroule(Concat(NFois(UneBase(T), 3), Choix(Nqb, Vide))))
+
+    //deroule(%) = Some(Nil)
     assertEquals(Some(Nil), deroule(Vide))
     assertEquals(Some(A :: C :: A :: C :: A :: C :: A :: C :: A :: C :: Nil), deroule(NFois(Concat(Choix(Nqb, UneBase(A)), UneBase(C)), 5)))
     assertEquals(Some(A :: A :: A :: T :: Nil), deroule(Choix(Concat(Choix(NFois(Nqb, 3), Impossible), UneBase(T)), Choix(Repete(Nqb), UneBase(G)))))
