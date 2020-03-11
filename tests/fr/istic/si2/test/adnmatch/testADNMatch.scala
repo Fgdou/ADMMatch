@@ -50,7 +50,7 @@ class ADNMatchTest {
     assertEquals(deroule(Nqb), Some(List(A)))
     assertEquals(deroule(Concat(NFois(UneBase(T), 3), Choix(Nqb, Vide))), Some(T::T::T::A::Nil))
     assertEquals(deroule(Vide), Some(Nil))
-    assertEquals(deroule(NFois(Concat(UneBase(A), UneBase(C)), 5)), Some(A::C::A::C::A::C::A::C::A::C::Nil))
+    assertEquals(deroule(NFois(Concat(Choix(Nqb, UneBase(A)), UneBase(C)), 5)), Some(A::C::A::C::A::C::A::C::A::C::Nil))
     assertEquals(deroule(Choix(Concat(Choix(NFois(Nqb, 3), Impossible), UneBase(T)), Choix(Repete(Nqb), UneBase(G)))), Some(A::A::A::T::Nil))
   }
 }
