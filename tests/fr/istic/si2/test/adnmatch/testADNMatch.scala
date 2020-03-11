@@ -99,7 +99,11 @@ class ADNMatchTest {
     assertEquals(false, matchComplet(UneBase(A), List(G)))
     // m(@, A) = false
     assertEquals(false, matchComplet(Impossible, List(A)))
+    // m(@, ATGC) = false
+    assertEquals(false, matchComplet(Impossible, List(A, T, G, C)))
     // m(%, A) = false
+    assertEquals(false, matchComplet(Vide, List(A, T, G, C)))
+    // m(%, ATGC) = false
     assertEquals(false, matchComplet(Vide, List(A)))
     // m(%,  ) = true
     assertEquals(true, matchComplet(Vide, List()))
@@ -107,6 +111,8 @@ class ADNMatchTest {
     assertEquals(true, matchComplet(Nqb, List(A)))
     // m(.,  ) = false
     assertEquals(false, matchComplet(Nqb, List()))
+    // m(.., GTA) = false
+    assertEquals(false, matchComplet(Concat(Nqb, Nqb), List(G, T, A)))
     // m(A|G, A) = true
     assertEquals(true, matchComplet(Choix(UneBase(A), UneBase(G)), List(A)))
     // m(AG, A) = false
