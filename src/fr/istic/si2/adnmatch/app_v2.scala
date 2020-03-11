@@ -15,11 +15,8 @@ object ADNMatchV2 extends App {
   val str: String = scala.io.StdIn.readLine("Enter regular expression>")
   val base = litRExp(str);
   val seq = lireSequence()
-
-
-  (base, seq) match {
+ (base, seq) match {
     case (Some(e), Some(s)) =>
-
       println("Expression : " + rExpToString(e))
       println("Sequence   : " + listeBasesToString(s))
 
