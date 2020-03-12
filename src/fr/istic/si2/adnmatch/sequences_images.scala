@@ -8,40 +8,6 @@ import fr.istic.si2.adnmatch.RExpMatcher._
 object SequencesImages {
 
   /**
-   * @param list une liste de base
-   * @param n    la taille d'une ligne
-   * @return une liste des n premiers éléments
-   * @note liste = ABCDEF et n = 3
-   *       return ABC
-   */
-  def getLine(list: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
-    list match {
-      case b :: list =>
-        if (n == 0)
-          Nil
-        else
-          b :: getLine(list, n - 1)
-      case Nil       => Nil
-    }
-  }
-
-  /**
-   * @param list une liste de base
-   * @param n    une taille de ligne
-   * @return la liste sans les n premiers éléments
-   */
-  def suppLine(list: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
-    list match {
-      case b :: list =>
-        if (n == 0)
-          b :: list
-        else
-          suppLine(list, n - 1)
-      case Nil       => Nil
-    }
-  }
-
-  /**
    * @param lmb    une liste de bases marquées
    * @param tligne entier strictement positif, représentant la taille d'une ligne en nombre de bases marquées
    * @return une liste contenant des sous-listes de lmb, toutes de taille tligne, sauf la dernière qui
@@ -50,7 +16,41 @@ object SequencesImages {
   def lignes(lmb: List[(Marqueur, Base)], tligne: Int): List[List[(Marqueur, Base)]] = {
     lmb match {
       case Nil => Nil
-      case _   => getLine(lmb, tligne) :: lignes(suppLine(lmb, tligne), tligne)
+      case _   => returnLigne(lmb, tligne) :: lignes(cutLigne(lmb, tligne), tligne)
+    }
+  }
+
+  /**
+   * @param lmb a list of bases with their markers
+   * @param n   the length we are working with
+   * @return a smaller list based on the length of n cut from the beginning
+   */
+  def returnLigne(lmb: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
+    lmb match {
+      case mbase :: nlist => {
+        if (n == 0)
+          Nil
+        else
+          mbase :: returnLigne(nlist, n - 1)
+      }
+      case Nil            => Nil
+    }
+  }
+
+  /**
+   * @param lmb a list of bases with their markers
+   * @param n   the length we are working with
+   * @return a smaller list based on the length of n cut from the end
+   */
+  def cutLigne(lmb: List[(Marqueur, Base)], n: Int): List[(Marqueur, Base)] = {
+    lmb match {
+      case mbase :: nlist => {
+        if (n == 0)
+          mbase::nlist
+        else
+          cutLigne(nlist, n - 1)
+      }
+      case Nil            => Nil
     }
   }
 
@@ -65,19 +65,20 @@ object SequencesImages {
    * @return une image représentant la base avec son marqueur visuel
    */
   def marqueurBaseToImage(mb: (Marqueur, Base)): Image = {
-    val char: String = mb match {
-      case (_, A) => "A"
-      case (_, G) => "G"
-      case (_, T) => "T"
-      case (_, C) => "C"
+    val text = mb._2 match {
+      case A => "A"
+      case T => "T"
+      case G => "G"
+      case C => "C"
     }
 
-    val color: Color = mb match {
+    val img = Text(text, fontSizeBase)
+    val colour = mb match {
+      case (In, _)  => Color(0, 100, 0, 255)
       case (Out, _) => Color(100, 0, 0, 255)
-      case (In, _)  => Color(0,100,0,255)
     }
 
-    FillColor(LineColor(Text(char, fontSizeBase), color), color)
+    LineColor(fillColor(img, colour), colour)
   }
 
   /**
@@ -86,8 +87,8 @@ object SequencesImages {
    */
   def imageUneLigne(ligne: List[(Marqueur, Base)]): Image = {
     ligne match {
-      case Nil       => Empty
-      case n :: list => Beside(marqueurBaseToImage(n), imageUneLigne(list))
+      case Nil           => Empty
+      case base :: nlist => Beside(marqueurBaseToImage(base), imageUneLigne(nlist))
     }
   }
 
@@ -99,8 +100,8 @@ object SequencesImages {
    */
   def imagePlusieursLignes(llignes: List[List[(Marqueur, Base)]]): Image = {
     llignes match {
-      case Nil       => Empty
-      case n :: list => Below(imageUneLigne(n), imagePlusieursLignes(list))
+      case Nil               => Empty
+      case list :: autrelist => Below(imageUneLigne(list), imagePlusieursLignes(autrelist))
     }
   }
 

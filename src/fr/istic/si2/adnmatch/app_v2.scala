@@ -13,7 +13,6 @@ object ADNMatchV2 extends App {
 
   println("ADNMatch Version 2")
 
-
   val exp: String = scala.io.StdIn.readLine("Enter regular expression>")
   val obj = litRExp(exp);
   val seq = lireSequence()
@@ -21,7 +20,6 @@ object ADNMatchV2 extends App {
 
   (obj, seq) match {
     case (Some(e), Some(s)) =>
-
       println("Expression : " + rExpToString(e))
       println("Sequence   : " + listeBasesToString(s))
 

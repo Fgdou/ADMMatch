@@ -1,5 +1,6 @@
 package fr.istic.si2.adnmatch
 
+import com.sun.tools.internal.ws.processor.modeler.annotation.TypeMoniker
 import fr.istic.si2.scribble._
 import fr.istic.si2.adnmatch._
 import fr.istic.si2.adnmatch.FonctionsRExp._

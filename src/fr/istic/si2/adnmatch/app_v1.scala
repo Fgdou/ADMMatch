@@ -25,5 +25,4 @@ object ADNMatchV1 extends App {
       }
 
   }
-
 }
