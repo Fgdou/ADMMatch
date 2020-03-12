@@ -136,7 +136,7 @@ object RExpMatcher {
   def sequenceNonDecrite(lb: List[Base]): List[(Marqueur, Base)] = {
     lb match {
       case Nil    => Nil
-      case n :: l => (In, n) :: sequenceNonDecrite(l)
+      case n :: l => (Out, n) :: sequenceNonDecrite(l)
     }
   }
 
