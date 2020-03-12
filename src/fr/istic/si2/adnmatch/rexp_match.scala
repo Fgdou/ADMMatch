@@ -92,8 +92,8 @@ object RExpMatcher {
         else
           Concat(derivee(e1, b), e2)
       case Nqb            => Vide
-      case NFois(e, n)    => Concat(derivee(e, b), NFois(e, n - 1))
       case NFois(e, 1)    => derivee(e, b)
+      case NFois(e, n)    => Concat(derivee(e, b), NFois(e, n - 1))
       case Repete(e)      => Concat(derivee(e, b), Repete(e))
       case Vide           => Impossible
       case Impossible     => Impossible
@@ -104,7 +104,6 @@ object RExpMatcher {
    * @param e  une expression régulière
    * @param lb une liste de bases azotées
    * @return vrai ssi la liste lb entière est décrite par e
-   *
    * @note Les tests JUnit et les tests que nous avons effectués dans la V2 marchent tous pour le matchComplet.
    *       Or la v3 affiche toute la sequence en vert peu importe l'expression.
    *       Nous ne comprenons pas.
@@ -170,7 +169,7 @@ object RExpMatcher {
     (pref, lb) match {
       case (_ :: pref, _ :: lb) => suppPrefixe(pref, lb)
       case (Nil, lb)            => lb
-      case (Nil, Nil)           => Nil
+      case _           => Nil
     }
   }
 

@@ -155,9 +155,9 @@ class ADNMatchTest {
     // s() = ()
     assertEquals(List(), sequenceNonDecrite(List()))
     // s(A) = (In, A)
-    assertEquals(List((In, A)), sequenceNonDecrite(List(A)))
+    assertEquals(List((Out, A)), sequenceNonDecrite(List(A)))
     // s(A, B) = (In, A),(In, G)
-    assertEquals(List((In, A), (In, G)), sequenceNonDecrite(List(A, G)))
+    assertEquals(List((Out, A), (Out, G)), sequenceNonDecrite(List(A, G)))
   }
 
 
@@ -167,7 +167,7 @@ class ADNMatchTest {
    */
 
   @Test
-  def testListeBasesToString: Unit = {
+  def testListeBasesToString()= {
     assertEquals("A", listeBasesToString(A :: Nil))
     assertEquals("", listeBasesToString(Nil))
     assertEquals("G", listeBasesToString(G :: Nil))
@@ -177,7 +177,7 @@ class ADNMatchTest {
   }
 
   @Test
-  def testrExpToString: Unit = {
+  def testrExpToString()= {
     //Impossible =  @
     assertEquals("@", rExpToString(Impossible))
 
@@ -201,7 +201,7 @@ class ADNMatchTest {
   }
 
   @Test
-  def testDeroule: Unit = {
+  def testDeroule()= {
     //deroule(@) = None
     assertEquals(deroule(Impossible), None)
 
@@ -278,21 +278,21 @@ class ADNMatchTest {
   //......................................................................................................
 
   @Test
-  def testlignes: Unit = {
+  def testlignes(){
     assertEquals(testreturn8, lignes(testList, 8))
     assertEquals(testreturn4, lignes(testList, 4))
     assertEquals(testreturn2, lignes(testList, 2))
   }
 
   @Test
-  def testreturnLigne: Unit = {
+  def testreturnLigne(){
     assertEquals(cutList8, returnLigne(testList, 8))
     assertEquals(cutList4, returnLigne(testList, 4))
     assertEquals(cutList2, returnLigne(testList, 2))
   }
 
   @Test
-  def testcutLigne: Unit = {
+  def testcutLigne(){
     assertEquals(restList8, cutLigne(testList, 8))
     assertEquals(restList4, cutLigne(testList, 4))
     assertEquals(restList2, cutLigne(testList, 2))
@@ -314,7 +314,7 @@ class ADNMatchTest {
 
 
   @Test
-  def testmarqueurBaseToImage: Unit = {
+  def testmarqueurBaseToImage(){
     assertEquals(inG, marqueurBaseToImage((In, G)))
     assertEquals(outG, marqueurBaseToImage((Out,G)))
     assertEquals(inA, marqueurBaseToImage((In, A)))
@@ -376,7 +376,7 @@ class ADNMatchTest {
   //......................................................................................................
 
   @Test
-  def testimageUneLigne: Unit = {
+  def testimageUneLigne(){
     assertEquals(imgLs1, imageUneLigne(imglist1))
     assertEquals(imgLs2, imageUneLigne(imglist2))
     assertEquals(imgLs3, imageUneLigne(imglist3))
@@ -420,7 +420,7 @@ class ADNMatchTest {
   //......................................................................................................
 
   @Test
-  def testimagePlusieursLignes: Unit = {
+  def testimagePlusieursLignes(){
     assertEquals(imgpLs1,imagePlusieursLignes(imgplist1))
     assertEquals(imgpLs2,imagePlusieursLignes(imgplist2))
     assertEquals(imgpLs3,imagePlusieursLignes(imgplist3))
@@ -429,7 +429,7 @@ class ADNMatchTest {
 
 
   @Test
-  def testPrefixMatch(): Unit = {
+  def testPrefixMatch(){
     // p(@,  ) = None
     assertEquals(None, prefixeMatch(Impossible, List()))
     // p(@, A) = None
@@ -449,7 +449,7 @@ class ADNMatchTest {
   }
 
   @Test
-  def testSuppPrefixe(): Unit = {
+  def testSuppPrefixe(){
     // s( , ) = ()
     assertEquals(List(), suppPrefixe(List(), List()))
     // s( , A) = A
@@ -461,7 +461,7 @@ class ADNMatchTest {
   }
 
   @Test
-  def testTousLesMatch(): Unit = {
+  def testTousLesMatch(){
     // m(%,  ) = ()
     assertEquals(List(), tousLesMatchs(Vide, List()))
     // m(%, A) = (Out, A)
@@ -483,7 +483,7 @@ class ADNMatchTest {
   }
 
   @Test
-  def testMessageResultat(): Unit = {
+  def testMessageResultat(){
     val ncontient: String = "Cette liste ne contient pas de sous séquence"
     val contient: String = "Cette liste contient une ou plusieurs sous séquence"
 
@@ -502,7 +502,7 @@ class ADNMatchTest {
   }
 
   @Test
-  def testAnnulerResultat(): Unit = {
+  def testAnnulerResultat(){
     // a() = ()
     assertEquals(List(), annulerResultat(List()))
     // a((In, A)) = (Out, A)
@@ -514,7 +514,7 @@ class ADNMatchTest {
   }
 
   @Test
-  def TestSansMarqueurs(): Unit = {
+  def TestSansMarqueurs(){
     // s() = ()
     assertEquals(List(), sansMarqueurs(List()))
     // s((Out, A)) = A
